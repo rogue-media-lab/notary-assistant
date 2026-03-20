@@ -28,7 +28,7 @@ On first launch, a setup wizard will walk you through entering your notary infor
 1. Install [Python 3.11+](https://www.python.org/downloads/) — check **"Add Python to PATH"** during the installer
 2. Clone this repo:
    ```
-   git clone <repo-url>
+   git clone https://github.com/rogue-media-lab/notary-assistant.git
    cd notary-assistant
    ```
 3. Create and activate a virtual environment:
@@ -58,7 +58,7 @@ On first launch, a setup wizard will walk you through entering your notary infor
    ```
 2. Clone this repo:
    ```
-   git clone <repo-url>
+   git clone https://github.com/rogue-media-lab/notary-assistant.git
    cd notary-assistant
    ```
 3. Create and activate a virtual environment:
@@ -99,6 +99,17 @@ All data is stored in `~/.notary_assistant/` (your user home folder):
 - `notary.db` — SQLite journal and wedding log
 
 Git updates to this repo will never touch your data.
+
+## What's Not in This Repo
+
+The following are intentionally excluded from version control — here's what to do about each:
+
+| Excluded | Why | What to do |
+|---|---|---|
+| `.venv/` | Virtual environments are machine-specific | Run `pip install -r requirements.txt` during setup — this recreates it |
+| `knowledge/*.pdf` / `knowledge/*.md` | May be copyrighted material | Add the SC Notary Public Reference Manual manually on each machine (see below) |
+| Your Gemini API key | Never committed — stored only on your machine | Entered through the first-run setup wizard; saved to `~/.notary_assistant/config.json` |
+| `~/.notary_assistant/` | Your data lives outside the repo entirely | Not affected by cloning or pulling updates |
 
 ## Knowledge File
 
