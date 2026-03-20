@@ -38,11 +38,11 @@ A local Streamlit app for US State Notary Public administrative work.
 
 | Notary Scholar | Notarial Journal |
 |---|---|
-| *(screenshot)* | *(screenshot)* |
+| ![Notary Scholar](screenshots/notary-scholar.png) | ![Notarial Journal](screenshots/notary-journal.png) |
 
 | Fee Calculator | Pre-Flight Checklist |
 |---|---|
-| *(screenshot)* | *(screenshot)* |
+| ![Fee Calculator](screenshots/fee-calculator.png) | ![Pre-Flight Checklist](screenshots/pre-flight-checklist.png) |
 
 ## Prerequisites
 
