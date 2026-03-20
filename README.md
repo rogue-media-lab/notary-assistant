@@ -1,6 +1,6 @@
 # Notary Assistant — Stamp and Certify Co
 
-A local Streamlit app for SC Notary Public administrative work.
+A local Streamlit app for US State Notary Public administrative work.
 
 ![Python](https://img.shields.io/badge/python-3.11+-3776AB?logo=python&logoColor=white)
 ![Streamlit](https://img.shields.io/badge/streamlit-1.35+-FF4B4B?logo=streamlit&logoColor=white)
