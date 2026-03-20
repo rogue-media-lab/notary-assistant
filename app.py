@@ -79,12 +79,26 @@ def render_setup_page():
             value=None,
             min_value=date.today(),
         )
-        county = st.text_input("County", placeholder="Richland")
+        col_county, col_state = st.columns(2)
+        with col_county:
+            county = st.text_input("County", placeholder="Richland")
+        with col_state:
+            state = st.text_input("State", placeholder="SC")
 
         st.subheader("Business Information")
         business_name = st.text_input("Business Name", value="Stamp and Certify Co")
         legal_entity = st.text_input("Legal Entity Name", value="Roberts and Associates LLC")
-        travel_fee = st.number_input("Default Travel Fee ($)", min_value=0.0, value=0.0, step=5.0)
+        col_travel, col_fee = st.columns(2)
+        with col_travel:
+            travel_fee = st.number_input("Default Travel Fee ($)", min_value=0.0, value=0.0, step=5.0)
+        with col_fee:
+            fee_per_signature = st.number_input(
+                "Statutory Fee per Signature ($)",
+                min_value=0.0,
+                value=5.0,
+                step=0.50,
+                help="Your state's maximum statutory notary fee per signature.",
+            )
 
         submitted = st.form_submit_button("Save & Continue", type="primary")
         if submitted:
@@ -101,9 +115,11 @@ def render_setup_page():
                         "commission_number": commission_number,
                         "commission_expires": commission_expires.isoformat() if commission_expires else "",
                         "county": county,
+                        "state": state,
                         "business_name": business_name,
                         "legal_entity": legal_entity,
                         "travel_fee_default": travel_fee,
+                        "fee_per_signature": fee_per_signature,
                     }
                 )
                 cfg.save(config)
@@ -400,7 +416,7 @@ def render_journal():
                 fee_charged = st.number_input(
                     "Notary Fee Charged ($)",
                     min_value=0.0,
-                    value=float(num_signatures * invoicing.SC_FEE_PER_SIGNATURE),
+                    value=float(num_signatures * config.get("fee_per_signature", invoicing.DEFAULT_FEE_PER_SIGNATURE)),
                     step=5.0,
                 )
             with col4:
@@ -526,14 +542,15 @@ def render_fee_calculator():
             step=5.0,
             key="inv_travel",
         )
-        breakdown = invoicing.calculate_fee(num_sigs, travel)
+        fee_per_sig = config.get("fee_per_signature", invoicing.DEFAULT_FEE_PER_SIGNATURE)
+        breakdown = invoicing.calculate_fee(num_sigs, travel, fee_per_sig)
 
         st.divider()
         m1, m2, m3 = st.columns(3)
         m1.metric("Notary Fee", f"${breakdown['notary_fee']:.2f}")
         m2.metric("Travel Fee", f"${breakdown['travel_fee']:.2f}")
         m3.metric("Total Due", f"${breakdown['total']:.2f}")
-        st.caption(f"SC statutory maximum: ${invoicing.SC_FEE_PER_SIGNATURE:.2f} per signature")
+        st.caption(f"Statutory maximum: ${fee_per_sig:.2f} per signature")
 
     with col_right:
         st.subheader("Generate Invoice")
@@ -557,7 +574,7 @@ def render_fee_calculator():
                     invoice_date=invoice_date.strftime("%B %d, %Y"),
                     client_name=client_name,
                     document_type=doc_type,
-                    fee_breakdown=invoicing.calculate_fee(num_sigs, travel),
+                    fee_breakdown=invoicing.calculate_fee(num_sigs, travel, fee_per_sig),
                     cfg=config,
                 )
                 st.text_area("Invoice Preview", value=invoice_text, height=350)
@@ -847,7 +864,11 @@ def render_settings():
         with col1:
             notary_name = st.text_input("Your Full Name", value=config.get("notary_name", ""))
             commission_number = st.text_input("Commission Number", value=config.get("commission_number", ""))
-            county = st.text_input("County", value=config.get("county", ""))
+            col_county, col_state = st.columns(2)
+            with col_county:
+                county = st.text_input("County", value=config.get("county", ""))
+            with col_state:
+                state = st.text_input("State", value=config.get("state", ""))
         with col2:
             exp_str = config.get("commission_expires", "")
             exp_val = date.fromisoformat(exp_str) if exp_str else None
@@ -857,6 +878,13 @@ def render_settings():
                 min_value=0.0,
                 value=float(config.get("travel_fee_default", 0.0)),
                 step=5.0,
+            )
+            fee_per_signature = st.number_input(
+                "Statutory Fee per Signature ($)",
+                min_value=0.0,
+                value=float(config.get("fee_per_signature", 5.0)),
+                step=0.50,
+                help="Your state's maximum statutory notary fee per signature.",
             )
 
         st.subheader("Business Information")
@@ -888,7 +916,9 @@ def render_settings():
                     "commission_number": commission_number,
                     "commission_expires": commission_expires.isoformat() if commission_expires else "",
                     "county": county,
+                    "state": state,
                     "travel_fee_default": travel_fee_default,
+                    "fee_per_signature": fee_per_signature,
                     "business_name": business_name,
                     "legal_entity": legal_entity,
                     "gemini_api_key": gemini_key,

@@ -50,9 +50,11 @@ A local Streamlit app for US State Notary Public administrative work.
 
 - **Python 3.11+** — required to run the app
 - **Gemini API key** — this app is built on Google Gemini for the Notary Scholar. You'll need a free API key from [Google AI Studio](https://aistudio.google.com/) before launching for the first time. The key is stored locally in `~/.notary_assistant/config.json` and never leaves your machine.
-- **Git** — to clone the repository
+- **Git** — to clone the repository. [Download Git](https://git-scm.com/downloads) if you don't have it (Windows users: use all default options during install)
 
-On first launch, a setup wizard will walk you through entering your notary information (name, commission number, expiration date, county), business name, and Gemini API key. No manual config file editing required. All of this can be updated later in the **Settings** page.
+On first launch, a setup wizard will walk you through entering your notary information (name, commission number, expiration date, county, state), business name, statutory fee per signature, and Gemini API key. No manual config file editing required. All of this can be updated later in the **Settings** page.
+
+> **Which Gemini model should I choose?** The setup wizard and Settings page let you pick from three models. `gemini-2.0-flash-lite` works on the free tier and is a good starting point. `gemini-2.5-flash` is faster and more capable (recommended if available on your plan). `gemini-2.5-pro` is the most powerful but uses more quota.
 
 ## Setup (one-time)
 
@@ -156,12 +158,14 @@ The following are intentionally excluded from version control — here's what to
 
 ## Knowledge File
 
-Place your state's Notary Public Reference Manual in the `knowledge/` folder, named as follows:
+Place your state's Notary Public Reference Manual in the `knowledge/` folder as any `.pdf` or `.md` file — the filename does not matter. The app will automatically load the first file it finds.
+
 ```
-knowledge/sc_notary_manual.pdf   ← preferred
-knowledge/sc_notary_manual.md    ← also supported
+knowledge/your_state_notary_manual.pdf   ← preferred
+knowledge/your_state_notary_manual.md    ← also supported
 ```
-PDF is checked first. Both are excluded from git (the manual may be copyrighted — add it manually on each machine). Without it, the Notary Scholar will still work but with limited state-specific knowledge.
+
+PDF is checked first. Both file types are excluded from git (the manual may be copyrighted — add it manually on each machine). Without it, the Notary Scholar will still work but with limited state-specific knowledge.
 
 ## Reporting Bugs & Issues
 

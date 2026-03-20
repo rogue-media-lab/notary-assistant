@@ -17,6 +17,8 @@ DEFAULTS = {
     "commission_number": "",
     "commission_expires": "",  # ISO format: YYYY-MM-DD
     "county": "",
+    "state": "",
+    "fee_per_signature": 5.00,
     "travel_fee_default": 0.0,
 }
 

@@ -2,16 +2,16 @@
 
 from datetime import date
 
-SC_FEE_PER_SIGNATURE = 5.00
+DEFAULT_FEE_PER_SIGNATURE = 5.00
 
 
-def calculate_fee(num_signatures: int, travel_fee: float = 0.0) -> dict:
+def calculate_fee(num_signatures: int, travel_fee: float = 0.0, fee_per_signature: float = DEFAULT_FEE_PER_SIGNATURE) -> dict:
     """Return a fee breakdown dict."""
-    notary_fee = round(num_signatures * SC_FEE_PER_SIGNATURE, 2)
+    notary_fee = round(num_signatures * fee_per_signature, 2)
     total = round(notary_fee + travel_fee, 2)
     return {
         "num_signatures": num_signatures,
-        "fee_per_signature": SC_FEE_PER_SIGNATURE,
+        "fee_per_signature": fee_per_signature,
         "notary_fee": notary_fee,
         "travel_fee": round(travel_fee, 2),
         "total": total,
@@ -31,14 +31,17 @@ def generate_invoice_text(
     legal_entity = cfg.get("legal_entity", "Roberts and Associates LLC")
     notary_name = cfg.get("notary_name", "")
     county = cfg.get("county", "")
+    state = cfg.get("state", "")
 
     lines = [
         "=" * 60,
         f"  {business_name}",
         f"  {legal_entity}",
     ]
-    if county:
-        lines.append(f"  {county} County, South Carolina")
+    if county and state:
+        lines.append(f"  {county} County, {state}")
+    elif county:
+        lines.append(f"  {county} County")
     lines += [
         "=" * 60,
         "",
@@ -68,14 +71,15 @@ def generate_invoice_text(
     ]
 
     if notary_name:
+        notary_line = f"  Notary Public, State of {state}" if state else "  Notary Public"
         lines += [
             f"  {notary_name}",
-            f"  Notary Public, State of South Carolina",
+            notary_line,
         ]
 
     lines += [
         "",
-        "  * Notary fees set per SC Code of Laws § 26-1-120",
+        "  * Notary fees set per your state's statutory maximum",
         "=" * 60,
     ]
 

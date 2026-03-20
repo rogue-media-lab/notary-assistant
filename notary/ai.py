@@ -1,4 +1,4 @@
-"""ScholarAgent — Gemini-powered SC Notary law reference assistant."""
+"""ScholarAgent — Gemini-powered Notary law reference assistant."""
 
 from pathlib import Path
 
@@ -12,23 +12,23 @@ log = get_logger("notary.ai")
 KNOWLEDGE_DIR = Path(__file__).parent.parent / "knowledge"
 
 SYSTEM_PROMPT_TEMPLATE = """\
-You are the Notary Scholar assistant for {business_name}, a notary public practice in South Carolina \
-operated by {notary_name}. Your sole purpose is to help the notary understand South Carolina notary \
+You are the Notary Scholar assistant for {business_name}, a notary public practice in {state} \
+operated by {notary_name}. Your sole purpose is to help the notary understand {state} notary \
 law and procedures.
 
 STRICT RULES — you must follow these without exception:
-1. Answer ONLY from the SC Notary Public Reference Manual provided below. Do not use outside knowledge.
+1. Answer ONLY from the Notary Public Reference Manual provided below. Do not use outside knowledge.
 2. NEVER draft, compose, or suggest wording for any legal document, affidavit, contract, deed, will, \
    power of attorney, or any other legal instrument. Refuse politely and explain this is the unauthorized \
    practice of law (UPL).
 3. NEVER give legal advice. You explain notary procedures, not legal strategy or outcomes.
 4. If a question is outside the manual or requires legal judgment, say so clearly and direct the user \
-   to consult the SC Secretary of State's office or a licensed SC attorney.
+   to consult your state's Secretary of State's office or a licensed attorney in your state.
 5. Always be accurate, cite the relevant section of the manual when possible, and be concise.
 6. You may help the notary understand what type of notarial act is appropriate for a given document, \
    explain certificate wording requirements, and clarify procedural steps.
 
---- SC NOTARY PUBLIC REFERENCE MANUAL ---
+--- {state} NOTARY PUBLIC REFERENCE MANUAL ---
 {manual_content}
 --- END OF MANUAL ---
 {supplemental_section}"""
@@ -39,12 +39,12 @@ SUPPLEMENTAL_TEMPLATE = """
 {supplemental_content}
 --- END OF SUPPLEMENTAL DOCUMENT ---
 
-When answering, draw from both the SC Notary Manual above and this supplemental document. \
-The manual takes precedence on matters of SC notary law."""
+When answering, draw from both the Notary Manual above and this supplemental document. \
+The manual takes precedence on matters of {state} notary law."""
 
 
 class ScholarAgent:
-    """Gemini chat agent with the SC Notary Manual injected as context."""
+    """Gemini chat agent with the state Notary Manual injected as context."""
 
     def __init__(self, supplemental_content: str = "", supplemental_name: str = ""):
         config = cfg.load()
@@ -56,12 +56,14 @@ class ScholarAgent:
         self.model_name = config.get("gemini_model", "gemini-2.5-flash")
         log.info("ScholarAgent initializing — model: %s", self.model_name)
 
+        state = config.get("state") or "your state"
         manual_content = self._load_manual()
 
         if supplemental_content:
             supplemental_section = SUPPLEMENTAL_TEMPLATE.format(
                 doc_name=supplemental_name or "Supplemental Document",
                 supplemental_content=supplemental_content,
+                state=state,
             )
             log.info("Supplemental document loaded: %s (%d chars)", supplemental_name, len(supplemental_content))
         else:
@@ -70,6 +72,7 @@ class ScholarAgent:
         self.system_prompt = SYSTEM_PROMPT_TEMPLATE.format(
             business_name=config.get("business_name", "Stamp and Certify Co"),
             notary_name=config.get("notary_name", "the notary"),
+            state=state,
             manual_content=manual_content,
             supplemental_section=supplemental_section,
         )
@@ -90,9 +93,9 @@ class ScholarAgent:
 
         log.warning("No manual found in knowledge/")
         return (
-            "[SC Notary Public Reference Manual not found. "
-            "Please place sc_notary_manual.pdf (or .md) in the knowledge/ directory. "
-            "Until then, answer general SC notary questions to the best of your ability "
+            "[Notary Public Reference Manual not found. "
+            "Please place your state's notary manual (any .pdf or .md file) in the knowledge/ directory. "
+            "Until then, answer general notary questions to the best of your ability "
             "while still refusing to give legal advice or draft documents.]"
         )
 
