@@ -2,6 +2,27 @@
 
 A local Streamlit app for SC Notary Public administrative work.
 
+![Python](https://img.shields.io/badge/python-3.11+-3776AB?logo=python&logoColor=white)
+![Streamlit](https://img.shields.io/badge/streamlit-1.35+-FF4B4B?logo=streamlit&logoColor=white)
+![License](https://img.shields.io/badge/license-GPL%20v3-blue)
+![Platform](https://img.shields.io/badge/platform-windows%20%7C%20linux-lightgrey)
+![AI](https://img.shields.io/badge/AI-Google%20Gemini-4285F4?logo=google&logoColor=white)
+
+---
+
+## Table of Contents
+
+- [Features](#features)
+- [Prerequisites](#prerequisites)
+- [Setup](#setup-one-time)
+- [Daily Use](#daily-use)
+- [Data Storage](#data-storage)
+- [What's Not in This Repo](#whats-not-in-this-repo)
+- [Knowledge File](#knowledge-file)
+- [Legal Disclaimer](#legal-disclaimer)
+
+---
+
 ## Features
 
 - **Notary Scholar** — Gemini-powered Q&A grounded in the SC Notary Public Reference Manual (UPL-safe); supports optional supplemental document upload (PDF, MD, TXT) per session; chat sessions can be saved with a label, linked to a journal entry, and downloaded as a transcript
@@ -12,6 +33,16 @@ A local Streamlit app for SC Notary Public administrative work.
 - **Wedding Officiant** — Log ceremonies with partner names, venue, and fee; manage reusable ceremony scripts; export ceremony log to CSV
 - **Settings** — Business info, commission expiration, default travel fee, Gemini API key and model selection; built-in application log viewer
 - **Sidebar** — Commission expiry warning shown automatically (alerts at 90 days, error when expired)
+
+## Screenshots
+
+| Notary Scholar | Notarial Journal |
+|---|---|
+| *(screenshot)* | *(screenshot)* |
+
+| Fee Calculator | Pre-Flight Checklist |
+|---|---|
+| *(screenshot)* | *(screenshot)* |
 
 ## Prerequisites
 
