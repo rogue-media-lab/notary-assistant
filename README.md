@@ -19,6 +19,8 @@ A local Streamlit app for US State Notary Public administrative work.
 - [Data Storage](#data-storage)
 - [What's Not in This Repo](#whats-not-in-this-repo)
 - [Knowledge File](#knowledge-file)
+- [Reporting Bugs & Issues](#reporting-bugs--issues)
+- [Contributing](#contributing)
 - [Legal Disclaimer](#legal-disclaimer)
 
 ---
@@ -160,6 +162,42 @@ knowledge/sc_notary_manual.pdf   ← preferred
 knowledge/sc_notary_manual.md    ← also supported
 ```
 PDF is checked first. Both are excluded from git (the manual may be copyrighted — add it manually on each machine). Without it, the Notary Scholar will still work but with limited state-specific knowledge.
+
+## Reporting Bugs & Issues
+
+Found something that isn't working right? We'd love to know about it.
+
+Head over to the [Issues tab](https://github.com/rogue-media-lab/notary-assistant/issues) on GitHub and click **New Issue**. You don't need to be a developer — just describe what happened. The more detail you can give, the easier it is to track down and fix. Try to include:
+
+- **What you were doing** when the problem occurred (e.g. "I was saving a journal entry")
+- **What you expected to happen** vs. **what actually happened**
+- **Your operating system** (Windows 10/11 or Linux distro)
+- **Any error message** shown on screen — a screenshot works great
+
+If you're not sure whether something is a bug or just a question, open an issue anyway. There are no wrong questions.
+
+## Contributing
+
+Contributions are welcome! Whether it's a bug fix, a new feature, or an improvement to the docs — here's how to get involved:
+
+1. **Fork the repo** — click the **Fork** button at the top right of the GitHub page. This creates your own copy to work in.
+2. **Clone your fork** to your machine and set it up following the [Setup](#setup-one-time) instructions.
+3. **Create a branch** for your change — keep it focused on one thing:
+   ```
+   git checkout -b feature/your-feature-name
+   ```
+4. **Make your changes**, test them locally, then commit:
+   ```
+   git add .
+   git commit -m "Brief description of what you changed"
+   ```
+5. **Push your branch** to your fork:
+   ```
+   git push origin feature/your-feature-name
+   ```
+6. **Open a Pull Request** — go to your fork on GitHub and click **Compare & pull request**. Describe what you changed and why.
+
+We'll review it and get back to you. If you're unsure whether a change would be accepted, open an issue first to discuss the idea before putting in the work.
 
 ## Legal Disclaimer
 
