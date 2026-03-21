@@ -1,12 +1,15 @@
-"""SC statutory certificate wording constants.
+"""Statutory certificate wording.
 
-IMPORTANT: Developer must verify all wording against the current
-SC Notary Public Reference Manual before use.
+Templates use the configured state name. The substantive wording follows
+standard US notarial certificate language — verify against your state's
+current Notary Public Reference Manual before use.
 """
 
-CERTIFICATE_OPTIONS: dict[str, str] = {
-    "Acknowledgment — Individual": """\
-State of South Carolina
+
+def get_certificate_options(state: str = "your state") -> dict[str, str]:
+    return {
+        "Acknowledgment — Individual": f"""\
+State of {state}
 County of _______________
 
 On this _____ day of _______________, 20_____, before me, the undersigned notary public, \
@@ -17,12 +20,12 @@ and acknowledged that he/she executed the same for the purposes therein containe
 In witness whereof I hereunto set my hand and official seal.
 
 ________________________________
-Notary Public for South Carolina
+Notary Public for {state}
 My Commission Expires: _______________
 """,
 
-    "Acknowledgment — Representative / Corporate": """\
-State of South Carolina
+        "Acknowledgment — Representative / Corporate": f"""\
+State of {state}
 County of _______________
 
 On this _____ day of _______________, 20_____, before me, the undersigned notary public, \
@@ -35,24 +38,24 @@ as the act and deed of said entity, being duly authorized to do so.
 In witness whereof I hereunto set my hand and official seal.
 
 ________________________________
-Notary Public for South Carolina
+Notary Public for {state}
 My Commission Expires: _______________
 """,
 
-    "Jurat": """\
-State of South Carolina
+        "Jurat": f"""\
+State of {state}
 County of _______________
 
 Subscribed and sworn to (or affirmed) before me on this _____ day of _______________, 20_____, \
 by _______________________________________________.
 
 ________________________________
-Notary Public for South Carolina
+Notary Public for {state}
 My Commission Expires: _______________
 """,
 
-    "Oath / Affirmation": """\
-State of South Carolina
+        "Oath / Affirmation": f"""\
+State of {state}
 County of _______________
 
 I, _______________________________________________, do solemnly swear (or affirm) that \
@@ -65,7 +68,7 @@ ________________________________
 Sworn to (or affirmed) and subscribed before me on this _____ day of _______________, 20_____.
 
 ________________________________
-Notary Public for South Carolina
+Notary Public for {state}
 My Commission Expires: _______________
 """,
-}
+    }

@@ -20,7 +20,7 @@ Marriage is a sacred commitment — a promise to love, support, and cherish one 
 
 (Response: I do.)
 
-By the power vested in me as a Notary Public of the State of South Carolina, I now pronounce you married.
+By the power vested in me as a Notary Public, I now pronounce you married.
 
 You may kiss!
 
@@ -67,7 +67,7 @@ def initialize_schema() -> None:
                 partner_2_name  TEXT NOT NULL,
                 location        TEXT,
                 city            TEXT,
-                state           TEXT DEFAULT 'SC',
+                state           TEXT,
                 fee_charged     REAL DEFAULT 0.0,
                 script_used     TEXT,
                 notes           TEXT

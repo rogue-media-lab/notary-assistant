@@ -86,8 +86,8 @@ def render_setup_page():
             state = st.text_input("State", placeholder="SC")
 
         st.subheader("Business Information")
-        business_name = st.text_input("Business Name", value="Stamp and Certify Co")
-        legal_entity = st.text_input("Legal Entity Name", value="Roberts and Associates LLC")
+        business_name = st.text_input("Business Name", placeholder="e.g., Stamp and Certify Co")
+        legal_entity = st.text_input("Legal Entity Name", placeholder="e.g., Roberts and Associates LLC")
         col_travel, col_fee = st.columns(2)
         with col_travel:
             travel_fee = st.number_input("Default Travel Fee ($)", min_value=0.0, value=0.0, step=5.0)
@@ -208,11 +208,12 @@ def render_scholar():
 
     # ------------------------------------------------------------------ Chat
     with tab_chat:
+        _state = config.get("state") or "your state"
         st.markdown(
             '<div class="upl-banner">'
-            "<strong>Important:</strong> This assistant answers questions about SC notary law and procedures "
-            "based on the SC Notary Public Reference Manual. It <strong>cannot</strong> draft documents, "
-            "provide legal advice, or replace a licensed SC attorney."
+            f"<strong>Important:</strong> This assistant answers questions about {_state} notary law and procedures "
+            f"based on your state's Notary Public Reference Manual. It <strong>cannot</strong> draft documents, "
+            f"provide legal advice, or replace a licensed {_state} attorney."
             "</div>",
             unsafe_allow_html=True,
         )
@@ -284,7 +285,7 @@ def render_scholar():
                 st.markdown(msg["content"])
 
         # Chat input
-        if prompt := st.chat_input("Ask a question about SC notary law or procedures…"):
+        if prompt := st.chat_input(f"Ask a question about {_state} notary law or procedures…"):
             st.session_state["scholar_history"].append({"role": "user", "content": prompt})
             with st.chat_message("user"):
                 st.markdown(prompt)
@@ -598,13 +599,15 @@ def render_certificates():
         "Fill in the blanks and attach to the document."
     )
 
-    cert_choice = st.selectbox("Certificate Type", list(certificates.CERTIFICATE_OPTIONS.keys()))
-    wording = certificates.CERTIFICATE_OPTIONS[cert_choice]
+    _state = config.get("state") or "your state"
+    cert_options = certificates.get_certificate_options(_state)
+    cert_choice = st.selectbox("Certificate Type", list(cert_options.keys()))
+    wording = cert_options[cert_choice]
 
     st.text_area("Certificate Wording", value=wording, height=300)
 
     st.info(
-        "Verify this wording against the current SC Notary Public Reference Manual "
+        f"Verify this wording against the current {_state} Notary Public Reference Manual "
         "before use. Statutory language may be amended."
     )
 

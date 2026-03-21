@@ -11,8 +11,8 @@ EXPORTS_DIR = CONFIG_DIR / "exports"
 DEFAULTS = {
     "gemini_api_key": "",
     "gemini_model": "gemini-2.5-flash",
-    "business_name": "Stamp and Certify Co",
-    "legal_entity": "Roberts and Associates LLC",
+    "business_name": "",
+    "legal_entity": "",
     "notary_name": "",
     "commission_number": "",
     "commission_expires": "",  # ISO format: YYYY-MM-DD
