@@ -70,7 +70,7 @@ class ScholarAgent:
             supplemental_section = ""
 
         self.system_prompt = SYSTEM_PROMPT_TEMPLATE.format(
-            business_name=config.get("business_name", "Stamp and Certify Co"),
+            business_name=config.get("business_name") or "your notary practice",
             notary_name=config.get("notary_name", "the notary"),
             state=state,
             manual_content=manual_content,

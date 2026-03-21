@@ -13,7 +13,7 @@ def add_ceremony(
     ceremony_time: str = "",
     location: str = "",
     city: str = "",
-    state: str = "SC",
+    state: str = "",
     fee_charged: float = 0.0,
     script_used: str = "",
     notes: str = "",

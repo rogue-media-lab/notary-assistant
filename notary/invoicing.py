@@ -27,8 +27,8 @@ def generate_invoice_text(
     cfg: dict,
 ) -> str:
     """Generate a plain-text invoice string using stdlib only."""
-    business_name = cfg.get("business_name", "Stamp and Certify Co")
-    legal_entity = cfg.get("legal_entity", "Roberts and Associates LLC")
+    business_name = cfg.get("business_name", "")
+    legal_entity = cfg.get("legal_entity", "")
     notary_name = cfg.get("notary_name", "")
     county = cfg.get("county", "")
     state = cfg.get("state", "")
