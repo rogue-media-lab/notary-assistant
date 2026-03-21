@@ -73,7 +73,7 @@ def render_setup_page():
 
         st.subheader("Your Notary Information")
         notary_name = st.text_input("Your Full Name *", placeholder="Jane Roberts")
-        commission_number = st.text_input("Commission Number", placeholder="SC-XXXXXXXX")
+        commission_number = st.text_input("Commission Number", placeholder="e.g., 12345678")
         commission_expires = st.date_input(
             "Commission Expiration Date",
             value=None,
@@ -94,7 +94,7 @@ def render_setup_page():
         with col_fee:
             fee_per_signature = st.number_input(
                 "Statutory Fee per Signature ($)",
-                min_value=0.0,
+                min_value=0.01,
                 value=5.0,
                 step=0.50,
                 help="Your state's maximum statutory notary fee per signature.",
@@ -259,6 +259,8 @@ def render_scholar():
                     else:
                         st.session_state["scholar"] = ScholarAgent()
                         log.info("Scholar initialized (manual only)")
+                    for w in st.session_state["scholar"].init_warnings:
+                        st.warning(w)
                     st.session_state.setdefault("scholar_history", [])
                 except Exception as e:
                     log.error("Scholar initialization failed: %s", e)
@@ -745,7 +747,7 @@ def render_wedding():
             with col2:
                 location = st.text_input("Venue / Location")
                 city = st.text_input("City")
-                state = st.text_input("State", value="SC")
+                state = st.text_input("State", value=config.get("state", ""))
                 fee_charged = st.number_input("Fee Charged ($)", min_value=0.0, value=0.0, step=25.0)
 
             scripts = wedding.get_all_scripts()
@@ -881,7 +883,7 @@ def render_settings():
             )
             fee_per_signature = st.number_input(
                 "Statutory Fee per Signature ($)",
-                min_value=0.0,
+                min_value=0.01,
                 value=float(config.get("fee_per_signature", 5.0)),
                 step=0.50,
                 help="Your state's maximum statutory notary fee per signature.",

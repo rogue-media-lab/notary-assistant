@@ -1,4 +1,4 @@
-"""Pre-flight checklist items for SC notarial acts.
+"""Pre-flight checklist items for notarial acts.
 
 Ordered to match the actual workflow sequence:
   1. Review the document
@@ -33,7 +33,7 @@ PREFLIGHT_ITEMS: list[str] = [
     "My official stamp/seal has been applied legibly",
 
     # --- Fee ---
-    "Fee charged does not exceed $5.00 per signature (SC statutory maximum)",
+    "Fee charged does not exceed the statutory maximum per signature for my state",
 
     # --- Journal recording ---
     "ID information has been recorded in the journal",

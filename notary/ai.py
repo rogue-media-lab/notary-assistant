@@ -78,6 +78,7 @@ class ScholarAgent:
         )
 
         self.history: list = []
+        self.init_warnings: list[str] = []
 
     def _load_manual(self) -> str:
         """Load manual from knowledge/. Supports .pdf and .md files."""
@@ -85,6 +86,11 @@ class ScholarAgent:
         mds = list(KNOWLEDGE_DIR.glob("*.md"))
 
         if pdfs:
+            if len(pdfs) > 1:
+                names = ", ".join(p.name for p in pdfs)
+                msg = f"Multiple PDFs found in knowledge/ ({names}) — using {pdfs[0].name}. Remove the others to avoid confusion."
+                log.warning(msg)
+                self.init_warnings.append(msg)
             log.info("Loading manual from PDF: %s", pdfs[0].name)
             return self._extract_pdf(pdfs[0])
         if mds:
