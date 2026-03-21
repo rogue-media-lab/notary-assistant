@@ -4,6 +4,39 @@ All notable changes to this project will be documented here.
 
 ---
 
+## [1.0.0] — 2026-03-20
+
+### Changed
+- **Modular architecture** — all page render functions moved from `app.py` into
+  dedicated `notary/pages/` modules (`scholar.py`, `journal.py`, `fee_calculator.py`,
+  `certificates.py`, `checklist.py`, `wedding.py`, `settings.py`). `app.py` is now a
+  thin orchestrator (~150 lines: bootstrap, sidebar, router)
+- `app.py` page title now reads business name from config instead of being hardcoded
+- Sidebar business name fallback is now "Notary Assistant" instead of a personal name
+
+### Fixed
+- Completed state-agnostic migration: certificate wording, UPL banner, chat placeholder,
+  and certificate info message all read state from config
+- `certificates.py` — replaced static SC dict with `get_certificate_options(state)`
+- Personal business name and legal entity removed from all source-code defaults and
+  fallbacks — new users see blank fields in setup, not someone else's company name
+- `db.py` default ceremony script and table schema no longer reference South Carolina
+- `pyproject.toml` — corrected package name (`google-generativeai` → `google-genai`)
+  and added missing `pypdf>=4.0.0` dependency
+- `run.bat` — removed hardcoded business name from window title
+- `run.sh` — added `.venv` existence check with helpful error message (matches `run.bat`)
+- Pre-flight checklist fee item no longer hardcodes SC statutory maximum
+- Commission number setup placeholder no longer says `SC-XXXXXXXX`
+- Wedding form state field now defaults from config
+- `fee_per_signature` minimum raised to `$0.01` to prevent accidental $0 entry
+- Added `init_warnings` to `ScholarAgent` — multiple PDFs in `knowledge/` now surfaces
+  a visible warning instead of silently using the first file
+
+### Added
+- Version badge in README
+
+---
+
 ## [0.1.1] — 2026-03-20
 
 ### Fixed

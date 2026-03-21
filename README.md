@@ -2,7 +2,7 @@
 
 A local Streamlit app for US State Notary Public administrative work.
 
-![Version](https://img.shields.io/badge/version-0.1.1-green)
+![Version](https://img.shields.io/badge/version-1.0.0-green)
 ![Python](https://img.shields.io/badge/python-3.11+-3776AB?logo=python&logoColor=white)
 ![Streamlit](https://img.shields.io/badge/streamlit-1.35+-FF4B4B?logo=streamlit&logoColor=white)
 ![License](https://img.shields.io/badge/license-GPL%20v3-blue)
